@@ -1,8 +1,9 @@
-package bitbot
+package main
 
 import (
 	"time"
 )
+
 type ExchangeAPI struct {
 	Name                    string
 	Type                    ExchangeType
@@ -14,6 +15,6 @@ type ExchangeAPI struct {
 	RESTPollingDelay        time.Duration //ms
 	EnabledPairs            string
 	AvailablePairs          string
-	BaseCurrencies          stringß
+	BaseCurrencies          string
 	AuthenticatedAPISupport bool
 }

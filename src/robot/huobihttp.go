@@ -1,4 +1,4 @@
-package bitbot
+package main
 
 import (
 	"fmt"

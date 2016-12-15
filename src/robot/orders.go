@@ -1,4 +1,4 @@
-package bitbot
+package main
 
 const (
 	LIMIT_ORDER = iota
