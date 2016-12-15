@@ -1,0 +1,49 @@
+baseurl = "https://bitbot.com.cn/"
+title = "bitbot"
+languageCode = "en-us"
+
+
+theme = "hugo_theme_beg"
+publishdir = "../public"
+
+[[menu.main]]
+name = "Home"
+pre = ""
+weight = 1
+url = "/"
+
+[[menu.main]]
+name = "控制中心"
+pre = ""
+weight = 2
+url = "/go/dashboard"
+
+[[menu.main]]
+name = "量化社区"
+pre = ""
+weight = 3
+url = "/forum"
+
+[[menu.main]]
+name = "bitbot API"
+pre = ""
+weight = 4
+url = "/tutorial"
+
+[[menu.main]]
+name = "策略学院"
+pre = ""
+weight = 5
+url = "/tutorial"
+
+[[menu.main]]
+name = "账户管理"
+pre = ""
+weight = 6
+url = "/go/account"
+
+[[menu.main]]
+name = ""
+pre = ""
+weight = 6
+url = "/go/account"
