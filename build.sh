@@ -84,7 +84,7 @@ GOOS=$GOOS GOARCH=$GOARCH go install
 
 echo "############ remove all binary files. ############"
 cd $ROOT/bin
-rm -rf *
+#rm -rf *
 
 echo "############ build and install console. ############"
 cd $ROOT/src/console
