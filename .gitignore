@@ -9,3 +9,5 @@ src/bitbotlib/bitbot.pb.go
 src/robot/robot
 src/robot/console
 .DS_Store
+hugo/*
+blog/*
