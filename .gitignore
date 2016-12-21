@@ -1,0 +1,7 @@
+src/robot/config.json
+.vscode/*
+bin/*
+dist/*
+pkg/*
+public/*
+ref/*

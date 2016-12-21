@@ -3,7 +3,7 @@ package main
 type StrategyVarabileType int
 
 const (
-	NUMBER StrategyVarabileType = 1 + iota
+	NUMBER StrategyVarabileType = iota
 	BOOLEAN
 	STRING //string
 	SELECTED
@@ -14,25 +14,27 @@ type StrategyVarabile struct {
 	Description  string
 	Hint         string
 	VarabileType StrategyVarabileType
-	DefaultValue string
+	DefaultValue interface{}
+}
+
+type StrategyVarabileValue struct {
+	Value interface{}
 }
 
 type StrategyLang int
 
 const (
-	GOLANG StrategyLang = 1 + iota
+	GOLANG StrategyLang = iota
 	NODEJS
 	PYTHON
 )
 
 type Strategy struct {
-	ID                int
-	Name              string
-	Description       string
-	Lang              StrategyLang
-	Code              string
-	StrategyVarabiles []StrategyVarabile
-
+	Name               string
+	Description        string
+	Lang               string //StrategyLang "JS" for javascript,"PY" for python, "GO" for Golang
+	Code               string
+	StrategyVarabiles  map[string]StrategyVarabile
 	LocalPath          string //local execute file relative path
 	LocalCommandParams string
 }

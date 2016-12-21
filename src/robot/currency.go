@@ -50,21 +50,21 @@ var (
 	ErrQueryingYahooZeroCount = errors.New("Yahoo returned zero currency data.")
 )
 
-func IsDefaultCurrency(currency string) bool {
-	return StringContains(DEFAULT_CURRENCIES, StringToUpper(currency))
-}
+// func IsDefaultCurrency(currency string) bool {
+// 	return StringContains(DEFAULT_CURRENCIES, StringToUpper(currency))
+// }
 
-func IsFiatCurrency(currency string) bool {
-	return StringContains(BaseCurrencies, StringToUpper(currency))
-}
+// func IsFiatCurrency(currency string) bool {
+// 	return StringContains(BaseCurrencies, StringToUpper(currency))
+// }
 
 // func IsCryptocurrency(currency string) bool {
-// 	return StringContains(bot.config.Cryptocurrencies, StringToUpper(currency))
+// 	return StringContains(docker.Cryptocurrencies, StringToUpper(currency))
 // }
 
 // func RetrieveConfigCurrencyPairs(config Config) error {
 // 	var fiatCurrencies, cryptoCurrencies []string
-// 	for _, exchange := range config.Exchanges {
+// 	for _, exchange := range config.ExchangeAccounts {
 // 		if exchange.Enabled {
 // 			enabledPairs := SplitStrings(exchange.EnabledPairs, ",")
 // 			baseCurrencies := SplitStrings(exchange.BaseCurrencies, ",")
@@ -102,7 +102,7 @@ func IsFiatCurrency(currency string) bool {
 // 			}
 // 		}
 // 	}
-// 	bot.config.Cryptocurrencies = JoinStrings(StringSliceDifference(SplitStrings(bot.config.Cryptocurrencies, ","), cryptoCurrencies), ",")
+// 	config.Cryptocurrencies = JoinStrings(StringSliceDifference(SplitStrings(config.Cryptocurrencies, ","), cryptoCurrencies), ",")
 // 	BaseCurrencies = JoinStrings(StringSliceDifference(SplitStrings(DEFAULT_CURRENCIES, ","), fiatCurrencies), ",")
 
 // 	err := QueryYahooCurrencyValues(BaseCurrencies)

@@ -1,311 +1,119 @@
 package main
 
-import (
-	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha1"
-	"crypto/sha256"
-	"crypto/sha512"
-	"encoding/base64"
-	"encoding/csv"
-	"encoding/hex"
-	"encoding/json"
-	"errors"
-	"hash"
-	"io"
-	"io/ioutil"
-	"log"
-	"math"
-	"net/http"
-	"net/url"
-	"os"
-	"strconv"
-	"strings"
-)
-
-const (
-	HASH_SHA1 = iota
-	HASH_SHA256
-	HASH_SHA512
-	HASH_SHA512_384
-	SATOSHIS_PER_BTC = 100000000
-	SATOSHIS_PER_LTC = 100000000
-)
-
-func GetMD5(input []byte) []byte {
-	hash := md5.New()
-	hash.Write(input)
-	return hash.Sum(nil)
+type TickerPrice struct {
+	CryptoCurrency string  `json:"CryptoCurrency"`
+	FiatCurrency   string  `json:"FiatCurrency"`
+	Last           float64 `json:"Last"`
+	High           float64 `json:"High"`
+	Low            float64 `json:"Low"`
+	Bid            float64 `json:"Bid"`
+	Ask            float64 `json:"Ask"`
+	Volume         float64 `json:"Volume"`
 }
 
-func GetSHA512(input []byte) []byte {
-	sha := sha512.New()
-	sha.Write(input)
-	return sha.Sum(nil)
+type OldTicker struct {
+	Price        map[string]map[string]TickerPrice
+	ExchangeName string
 }
 
-func GetSHA256(input []byte) []byte {
-	sha := sha256.New()
-	sha.Write(input)
-	return sha.Sum(nil)
-}
+// func (t *Ticker) PriceToString(cryptoCurrency, fiatCurrency, priceType string) string {
+// 	switch priceType {
+// 	case "last":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].Last, 'f', -1, 64)
+// 	case "high":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].High, 'f', -1, 64)
+// 	case "low":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].Low, 'f', -1, 64)
+// 	case "bid":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].Bid, 'f', -1, 64)
+// 	case "ask":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].Ask, 'f', -1, 64)
+// 	case "volume":
+// 		return strconv.FormatFloat(t.Price[cryptoCurrency][fiatCurrency].Volume, 'f', -1, 64)
+// 	default:
+// 		return ""
+// 	}
+// }
 
-func GetHMAC(hashType int, input, key []byte) []byte {
-	var hash func() hash.Hash
+// func AddTickerPrice(m map[string]map[string]TickerPrice, cryptocurrency, fiatcurrency string, price TickerPrice) {
+// 	mm, ok := m[cryptocurrency]
+// 	if !ok {
+// 		mm = make(map[string]TickerPrice)
+// 		m[cryptocurrency] = mm
+// 	}
+// 	mm[fiatcurrency] = price
+// }
 
-	switch hashType {
-	case HASH_SHA1:
-		{
-			hash = sha1.New
-		}
-	case HASH_SHA256:
-		{
-			hash = sha256.New
-		}
-	case HASH_SHA512:
-		{
-			hash = sha512.New
-		}
-	case HASH_SHA512_384:
-		{
-			hash = sha512.New384
-		}
-	}
+// func NewTicker(exchangeName string, prices []TickerPrice) *Ticker {
+// 	ticker := &Ticker{}
+// 	ticker.ExchangeName = exchangeName
+// 	ticker.Price = make(map[string]map[string]TickerPrice, 0)
 
-	hmac := hmac.New(hash, []byte(key))
-	hmac.Write(input)
-	return hmac.Sum(nil)
-}
+// 	for x, _ := range prices {
+// 		AddTickerPrice(ticker.Price, prices[x].CryptoCurrency, prices[x].FiatCurrency, prices[x])
+// 	}
 
-func HexEncodeToString(input []byte) string {
-	return hex.EncodeToString(input)
-}
+// 	return ticker
+// }
 
-func Base64Decode(input string) ([]byte, error) {
-	result, err := base64.StdEncoding.DecodeString(input)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
-}
+// const (
+// 	LIMIT_ORDER = iota
+// 	MARKET_ORDER
+// )
 
-func Base64Encode(input []byte) string {
-	return base64.StdEncoding.EncodeToString(input)
-}
+// var Orders []*Order
 
-func StringSliceDifference(slice1 []string, slice2 []string) []string {
-	var diff []string
-	for i := 0; i < 2; i++ {
-		for _, s1 := range slice1 {
-			found := false
-			for _, s2 := range slice2 {
-				if s1 == s2 {
-					found = true
-					break
-				}
-			}
-			if !found {
-				diff = append(diff, s1)
-			}
-		}
-		if i == 0 {
-			slice1, slice2 = slice2, slice1
-		}
-	}
-	return diff
-}
+// type Order struct {
+// 	OrderID  int
+// 	Exchange string
+// 	Type     int
+// 	Amount   float64
+// 	Price    float64
+// }
 
-func StringContains(input, substring string) bool {
-	return strings.Contains(input, substring)
-}
+// func NewOrder(Exchange string, amount, price float64) int {
+// 	order := &Order{}
+// 	if len(Orders) == 0 {
+// 		order.OrderID = 0
+// 	} else {
+// 		order.OrderID = len(Orders)
+// 	}
 
-func JoinStrings(input []string, seperator string) string {
-	return strings.Join(input, seperator)
-}
+// 	order.Exchange = Exchange
+// 	order.Amount = amount
+// 	order.Price = price
+// 	Orders = append(Orders, order)
+// 	return order.OrderID
+// }
 
-func SplitStrings(input, seperator string) []string {
-	return strings.Split(input, seperator)
-}
+// func DeleteOrder(orderID int) bool {
+// 	for i := range Orders {
+// 		if Orders[i].OrderID == orderID {
+// 			Orders = append(Orders[:i], Orders[i+1:]...)
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
 
-func TrimString(input, cutset string) string {
-	return strings.Trim(input, cutset)
-}
+// func GetOrdersByExchange(exchange string) ([]*Order, bool) {
+// 	orders := []*Order{}
+// 	for i := range Orders {
+// 		if Orders[i].Exchange == exchange {
+// 			orders = append(orders, Orders[i])
+// 		}
+// 	}
+// 	if len(orders) > 0 {
+// 		return orders, true
+// 	}
+// 	return nil, false
+// }
 
-func StringToUpper(input string) string {
-	return strings.ToUpper(input)
-}
-
-func StringToLower(input string) string {
-	return strings.ToLower(input)
-}
-
-func RoundFloat(x float64, prec int) float64 {
-	var rounder float64
-	pow := math.Pow(10, float64(prec))
-	intermed := x * pow
-	_, frac := math.Modf(intermed)
-	intermed += .5
-	x = .5
-	if frac < 0.0 {
-		x = -.5
-		intermed -= 1
-	}
-	if frac >= x {
-		rounder = math.Ceil(intermed)
-	} else {
-		rounder = math.Floor(intermed)
-	}
-
-	return rounder / pow
-}
-
-func IsEnabled(isEnabled bool) string {
-	if isEnabled {
-		return "Enabled"
-	} else {
-		return "Disabled"
-	}
-}
-
-func CalculateAmountWithFee(amount, fee float64) float64 {
-	return amount + CalculateFee(amount, fee)
-}
-
-func CalculateFee(amount, fee float64) float64 {
-	return amount * (fee / 100)
-}
-
-func CalculatePercentageDifference(amount, secondAmount float64) float64 {
-	return (secondAmount - amount) / amount * 100
-}
-
-func CalculateNetProfit(amount, priceThen, priceNow, costs float64) float64 {
-	return (priceNow * amount) - (priceThen * amount) - costs
-}
-
-func SendHTTPRequest(method, path string, headers map[string]string, body io.Reader) (string, error) {
-	result := strings.ToUpper(method)
-
-	if result != "POST" && result != "GET" && result != "DELETE" {
-		return "", errors.New("Invalid HTTP method specified.")
-	}
-
-	req, err := http.NewRequest(method, path, body)
-
-	if err != nil {
-		return "", err
-	}
-
-	for k, v := range headers {
-		req.Header.Add(k, v)
-	}
-
-	httpClient := &http.Client{}
-	resp, err := httpClient.Do(req)
-
-	if err != nil {
-		return "", err
-	}
-
-	contents, err := ioutil.ReadAll(resp.Body)
-	defer resp.Body.Close()
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(contents), nil
-}
-
-func SendHTTPGetRequest(url string, jsonDecode bool, result interface{}) (err error) {
-	res, err := http.Get(url)
-
-	if err != nil {
-		return err
-	}
-
-	if res.StatusCode != 200 {
-		log.Printf("URL: %s:\n", url)
-		log.Printf("HTTP status code: %d\n", res.StatusCode)
-		return errors.New("Status code was not 200.")
-	}
-
-	contents, err := ioutil.ReadAll(res.Body)
-
-	if err != nil {
-		return err
-	}
-
-	defer res.Body.Close()
-
-	if jsonDecode {
-		err := JSONDecode(contents, &result)
-
-		if err != nil {
-			return err
-		}
-	} else {
-		result = &contents
-	}
-
-	return nil
-}
-
-func JSONEncode(v interface{}) ([]byte, error) {
-	json, err := json.Marshal(&v)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return json, nil
-}
-
-func JSONDecode(data []byte, to interface{}) error {
-	err := json.Unmarshal(data, &to)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func EncodeURLValues(url string, values url.Values) string {
-	path := url
-	if len(values) > 0 {
-		path += "?" + values.Encode()
-	}
-	return path
-}
-
-func ExtractHost(address string) string {
-	host := SplitStrings(address, ":")[0]
-	if host == "" {
-		return "localhost"
-	}
-	return host
-}
-
-func ExtractPort(host string) int {
-	portStr := SplitStrings(host, ":")[1]
-	port, _ := strconv.Atoi(portStr)
-	return port
-}
-
-func OutputCSV(path string, data [][]string) error {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-
-	writer := csv.NewWriter(file)
-
-	err = writer.WriteAll(data)
-	if err != nil {
-		return err
-	}
-
-	defer writer.Flush()
-	return nil
-}
+// func GetOrderByOrderID(orderID int) (*Order, bool) {
+// 	for i := range Orders {
+// 		if Orders[i].OrderID == orderID {
+// 			return Orders[i], true
+// 		}
+// 	}
+// 	return nil, false
+// }

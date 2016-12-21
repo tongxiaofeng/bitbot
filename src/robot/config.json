@@ -1,59 +1,160 @@
 {
- "Cryptocurrencies": "BTC,USDT,HKD,EUR,CAD,AUD,SGD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,EUR,CAD,AUD,SGD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,CAD,AUD,SGD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,AUD,SGD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,CAD,SGD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,CAD,AUD,JPY,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,CAD,AUD,SGD,GBP,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,CAD,AUD,SGD,JPY,NZD,LTC,DOG,EBTC,STR,XRP,HKD,EUR,CAD,AUD,SGD,JPY,GBP,LTC,DOG,EBTC,STR,XRP,LTC,LTC,ETH,ETH,LTC,LTC,LT,LTC,RUR,EUR,LTC,LTC,LTC,RUR,LTC,EUR,NMC,NMC,NVC,NVC,RUR,EUR,EUR,RUR,PPC,PPC,RUR,EUR,LTC,LTC,LTC,RUR,LTC,EUR,NMC,NMC,NVC,NVC,RUR,EUR,EUR,RUR,PPC,PPC,RUR,LTC,LTC,LTC,RUR,LTC,NMC,NMC,NVC,NVC,RUR,PPC,PPC,LTC,GBP,EUR,EUR,GBP,LT,XBT,XBT,SGD,XBT,EUR,XBT,XBT,XBT,EUR,XBT,XBT,SGD,XBT,XBT,XBT,XBT,CAD,XBT,GBP,XBT,JPY,LTC,LTC,LTC,CAD,ETH,XBT,TH,ETH,ETH,CAD,ETH,GBP,ETH,JPY,XBT,LTC,XBT,NMC,XBT,XDG,XBT,XLM,XBT,XRP,XBT,EUR,XBT,XBT,CAD,XBT,GBP,XBT,JPY,LTC,EUR,LTC,LTC,CAD,ETH,XBT,ETH,EUR,ETH,ETH,CAD,ETH,GBP,ETH,JPY,XBT,LTC,XBT,NMC,XBT,XDG,XBT,XLM,XBT,XRP,XBT,EUR,XBT,XBT,XBT,GBP,XBT,JPY,LTC,EUR,LTC,LT,ETH,XBT,ETH,EUR,ETH,ETH,ETH,GBP,ETH,JPY,XBT,LTC,XBT,NMC,XBT,XDG,XBT,XLM,XBT,XRP,XBT,EUR,XBT,XBT,CAD,XBT,XBT,JPY,LTC,EUR,LTC,LTC,CAD,ETH,XBT,ETH,EUR,ETH,ETH,CAD,ETH,ETH,JPY,XBT,LTC,XBT,NMC,XBT,XDG,XBT,XLM,XBT,XRP,XBT,EUR,XBT,XBT,CAD,XBT,GBP,XBT,LTC,EUR,LTC,LTC,CAD,ETH,XBT,ETH,EUR,ETH,ETH,CAD,ETH,GBP,ETH,XBT,LTC,XBT,NMC,XBT,XDG,XBT,XLM,XBT,XRP,CNY,CNY,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,ZAR,ARS,AUD,BRL,CAD,CHF,CZK,DKK,EUR,GBP,HKD,ILS,INR,MXN,NOK,NZD,PLN,RUB,SEK,SGD,THB,LT,LTC",
- "Exchanges": [
-  {
-   "Name": "BTCC",
-   "Enabled": true,
-   "Verbose": false,
-   "RESTPollingDelay": 100,
-   "AuthenticatedAPISupport": false,
-   "APIKey": "Key",
-   "APISecret": "Secret",
-   "ClientID": "",
-   "AvailablePairs": "BTCCNY,LTCCNY,LTCBTC",
-   "EnabledPairs": "BTCCNY",
-   "BaseCurrencies": "CNY"
+  "ID": 0,
+  "ServerAddress": "",
+  "IP": "127.0.0.1",
+  "Port": 8080,
+  "OS": "Mac",
+  "OSVersion": "Latest",
+  "DockerVersion": "0.0.1",
+  "Status": 0,
+  "IsLocal": true,
+  "Verbose": true,
+  "Cryptocurrencies": "BTC,LTC,ETH,ETC",
+  "DisplayCurrency": "CNY",
+  "ExchangeConfigs": {
+    "BTCC": {
+      "Enabled": false,
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY,LTCBTC",
+      "BaseCurrencies": "CNY"
+    },
+    "HUOBI": {
+      "Enabled": false,
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY",
+      "BaseCurrencies": "CNY"
+    },
+    "OKCOINCHINA": {
+      "Enabled": false,
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY",
+      "BaseCurrencies": "CNY"
+    },
+    "OKCOININTERNATIONAL": {
+      "Enabled": false,
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCUSD,LTCUSD",
+      "BaseCurrencies": "USD"
+    }
   },
-  {
-   "Name": "Huobi",
-   "Enabled": false,
-   "Verbose": false,
-   "RESTPollingDelay": 100,
-   "AuthenticatedAPISupport": false,
-   "APIKey": "Key",
-   "APISecret": "Secret",
-   "ClientID": "",
-   "AvailablePairs": "BTCCNY,LTCCNY",
-   "EnabledPairs": "BTCCNY,LTCCNY",
-   "BaseCurrencies": "CNY"
+  "ExchangeAccounts": {
+    "0": {
+      "Exchange": "BTCC",
+      "Label": "BTCC-Tong",
+      "APIKey": "61ef86c9-ae51-4e05-9f78-5593ad370e79",
+      "APISecret": "b1de6f5d-d636-4bd8-bd02-74cba5d93df8",
+      "ClientID": "",
+      "EnabledPairs": "BTCCNY",
+      "AuthenticatedAPISupport": true
+    },
+    "1": {
+      "Exchange": "HUOBI",
+      "Label": "Huobi-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPairs": "BTCCNY",
+      "AuthenticatedAPISupport": false
+    },
+    "2": {
+      "Exchange": "OKCOINCHINA",
+      "Label": "OKChina-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPairs": "BTCCNY",
+      "AuthenticatedAPISupport": false
+    },
+    "3": {
+      "Exchange": "OKCOININTERNATIONAL",
+      "Label": "OKUSD-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPairs": "BTCUSD",
+      "AuthenticatedAPISupport": false
+    }
   },
-  {
-   "Name": "OKCOIN China",
-   "Enabled": false,
-   "Verbose": false,
-   "RESTPollingDelay": 100,
-   "AuthenticatedAPISupport": false,
-   "APIKey": "Key",
-   "APISecret": "Secret",
-   "ClientID": "",
-   "AvailablePairs": "BTCCNY,LTCCNY",
-   "EnabledPairs": "BTCCNY,LTCCNY",
-   "BaseCurrencies": "CNY"
+  "Strategies": {
+    "0": {
+      "Name": "First JS Strategy",
+      "Description": "first strategy in javascript.",
+      "Lang": "JS",
+      "Code": "",
+      "StrategyVarabiles": {
+        "0": {
+          "Name": "num var",
+          "Description": "This is a number var",
+          "Hint": "",
+          "VarabileType": 0,
+          "DefaultValue": 0
+        },
+        "1": {
+          "Name": "bool var",
+          "Description": "This is a bool var",
+          "Hint": "",
+          "VarabileType": 1,
+          "DefaultValue": false
+        }
+      },
+      "LocalPath": "/Users/tongxiaofeng/code/bitbot/strategy/first.js",
+      "LocalCommandParams": ""
+    },
+    "1": {
+      "Name": "Second JS Strategy",
+      "Description": "second strategy in javascript.",
+      "Lang": "JS",
+      "Code": "",
+      "StrategyVarabiles": {
+        "0": {
+          "Name": "string var",
+          "Description": "This is a string var",
+          "Hint": "",
+          "VarabileType": 2,
+          "DefaultValue": "string for output."
+        }
+      },
+      "LocalPath": "/Users/tongxiaofeng/code/bitbot/strategy/second.js",
+      "LocalCommandParams": ""
+    }
   },
-  {
-   "Name": "OKCOIN International",
-   "Enabled": false,
-   "Verbose": false,
-   "RESTPollingDelay": 100,
-   "AuthenticatedAPISupport": false,
-   "APIKey": "Key",
-   "APISecret": "Secret",
-   "ClientID": "",
-   "AvailablePairs": "BTCUSD,LTCUSD",
-   "EnabledPairs": "BTCUSD,LTCUSD",
-   "BaseCurrencies": "USD"
+  "Bots": {
+    "0": {
+      "Name": "First Bot",
+      "StrategyID": "0",
+      "DockerID": "0",
+      "KLineInterval": 0,
+      "ExchangeAccountAPIIDs": "2",
+      "Status": 1,
+      "StatusDescription": "This robot is stopped.",
+      "Enabled": false,
+      "Backtesting": false,
+      "PaperTrading": false,
+      "StrategyVarabileValues": {
+        "0": {
+          "Value": 10000
+        },
+        "1": {
+          "Value": true
+        }
+      }
+    },
+    "1": {
+      "Name": "Second Bot",
+      "StrategyID": "1",
+      "DockerID": "0",
+      "KLineInterval": 0,
+      "ExchangeAccountAPIIDs": "0,2",
+      "Status": 1,
+      "StatusDescription": "This robot is stopped.",
+      "Enabled": true,
+      "Backtesting": false,
+      "PaperTrading": false,
+      "StrategyVarabileValues": {
+        "0": {
+          "Value": false
+        }
+      }
+    }
   }
- ],
- 
-
 }
