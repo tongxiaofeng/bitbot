@@ -5,7 +5,7 @@ dist/*
 pkg/*
 public/*
 ref/*
-ref/*
 src/bitbotlib/bitbot.pb.go
 src/robot/robot
 src/robot/console
+.DS_Store
