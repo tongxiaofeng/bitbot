@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"net/smtp"
 	"time"
@@ -10,6 +11,8 @@ import (
 
 	"os"
 	"strings"
+
+	"errors"
 
 	"github.com/robertkrimen/otto"
 	_ "github.com/robertkrimen/otto/underscore"
@@ -46,7 +49,7 @@ type BotLog struct {
 	Message      string
 }
 
-type Bot struct {
+type BotConfig struct {
 	Name                  string
 	StrategyID            string
 	DockerID              string
@@ -57,28 +60,69 @@ type Bot struct {
 	Enabled               bool
 	Backtesting           bool
 	PaperTrading          bool
-
 	//StartTime time.Time
 	//StopTime  time.Time
 	StrategyVarabileValues map[string]StrategyVarabileValue
-
-	jsVM      *otto.Otto
-	docker    *Docker
-	exchanges []IExchange
-
-	botLogs       []BotLog
-	commands      string
-	lastError     string
-	errorFilter   string
-	botStatusLog  string
-	enableAutoLog bool
 }
 
-func (bot *Bot) Start(docker *Docker, code string, exchanges []IExchange) (err error) {
-	log.Printf("Bot %s Started!\n", bot.Name)
-	bot.docker = docker
-	bot.exchanges = exchanges
+type Bot struct {
+	BotConfig
 
+	jsVM             *otto.Otto
+	docker           *Docker
+	botLogs          []BotLog
+	commands         string
+	lastError        string
+	errorFilter      string
+	botStatusLog     string
+	autoLogEnable    bool
+	exchangeAccounts []IExchangeAccount
+}
+
+func (bot *Bot) Start() (err error) {
+	var code string
+	var exchangeAcct IExchangeAccount
+
+	//getting strategy code
+	strategy := docker.StrategieConfigs[bot.StrategyID]
+	if strategy.Code != "" {
+		code = strategy.Code
+	} else {
+		if retrieved, err := ioutil.ReadFile(strategy.LocalPath); err != nil {
+			log.Print(err.Error())
+			return err
+		} else {
+			code = string(retrieved)
+		}
+	}
+
+	//setup exchanges
+	acctIDs := strings.Split(bot.ExchangeAccountAPIIDs, ",")
+	for _, acctID := range acctIDs {
+		acct := docker.ExchangeAccountConfigs[acctID]
+		switch acct.ExchangeName {
+		case "BTCC":
+			exchangeAcct = new(BTCCExchangeAccount)
+		case "HUOBI":
+			exchangeAcct = new(HUOBIExchangeAccount)
+		case "OKCOINCNY":
+			exchangeAcct = new(OKCoinExchangeAccount)
+		case "OKCOINUSD":
+			exchangeAcct = new(OKCoinExchangeAccount)
+		default:
+			log.Printf("Unknown Exchange %s.", acct.ExchangeName)
+		}
+		if exchangeAcct == nil {
+			return errors.New("Cannot Create ExchangeAccouant.")
+		} else {
+			exchangeAcct.Setup(docker.ExchangeAccountConfigs[acctID])
+			//exchange.Start()
+			bot.exchangeAccounts = append(bot.exchangeAccounts, exchangeAcct)
+
+		}
+	}
+
+	log.Printf("Starting Bot %s\n", bot.Name)
 	bot.jsVM = otto.New()
 
 	bot.setupJSVM()
@@ -96,12 +140,12 @@ func (bot *Bot) Start(docker *Docker, code string, exchanges []IExchange) (err e
 		}
 	}()
 
-	return
+	return nil
 }
 func (bot *Bot) setupJSVM() {
 	bot.jsVM.Set("Version", bot.docker.version)
-	bot.jsVM.Set("exchanges", bot.exchanges)
-	bot.jsVM.Set("exchange", bot.exchanges[0])
+	bot.jsVM.Set("exchanges", bot.exchangeAccounts)
+	bot.jsVM.Set("exchange", bot.exchangeAccounts[0])
 
 	bot.jsVM.Set("Sleep", bot.Sleep)
 	bot.jsVM.Set("LogProfit", bot.LogProfit)
@@ -255,7 +299,7 @@ func (bot *Bot) SetErrorFilter(filter string) {
 }
 
 func (bot *Bot) EnableLog(enable bool) {
-	bot.enableAutoLog = enable
+	bot.autoLogEnable = enable
 	return
 }
 

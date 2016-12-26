@@ -29,7 +29,7 @@ const (
 	PYTHON
 )
 
-type Strategy struct {
+type StrategyConfig struct {
 	Name               string
 	Description        string
 	Lang               string //StrategyLang "JS" for javascript,"PY" for python, "GO" for Golang

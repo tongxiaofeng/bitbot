@@ -1,20 +1,20 @@
 package main
 
-type TickerPrice struct {
-	CryptoCurrency string  `json:"CryptoCurrency"`
-	FiatCurrency   string  `json:"FiatCurrency"`
-	Last           float64 `json:"Last"`
-	High           float64 `json:"High"`
-	Low            float64 `json:"Low"`
-	Bid            float64 `json:"Bid"`
-	Ask            float64 `json:"Ask"`
-	Volume         float64 `json:"Volume"`
-}
+// type TickerPrice struct {
+// 	CryptoCurrency string  `json:"CryptoCurrency"`
+// 	FiatCurrency   string  `json:"FiatCurrency"`
+// 	Last           float64 `json:"Last"`
+// 	High           float64 `json:"High"`
+// 	Low            float64 `json:"Low"`
+// 	Bid            float64 `json:"Bid"`
+// 	Ask            float64 `json:"Ask"`
+// 	Volume         float64 `json:"Volume"`
+// }
 
-type OldTicker struct {
-	Price        map[string]map[string]TickerPrice
-	ExchangeName string
-}
+// type OldTicker struct {
+// 	Price        map[string]map[string]TickerPrice
+// 	ExchangeName string
+// }
 
 // func (t *Ticker) PriceToString(cryptoCurrency, fiatCurrency, priceType string) string {
 // 	switch priceType {

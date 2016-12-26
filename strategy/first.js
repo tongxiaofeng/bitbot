@@ -15,21 +15,16 @@ function main() {
     //     log("Acct:" ,exchange.GetEnabledCurrencies())
     // }
     log(exchange.GetName())
-    var currencies = exchange.GetAccount().Currencies 
-    if(currencies != null  && currencies != undefined)
-    {
-        for( i = 0; i < currencies.length; i++){
-            log(currencies[0].CurrencyName)
-            log(currencies[0].TotalValue)
-            log(currencies[0].Hold)
-        }
-    }
 
-    for(i = 0;i<100;i++){
-        console.log("-------  :" + i);
-    }
+    var ticker = exchange.GetTicker()
+    log(ticker.High)
 
-    var moneys = exchange.GetEnabledCurrencies();
+
+    // for(i = 0;i<100;i++){
+    //     console.log("-------  :" + i);
+    // }
+
+    var moneys = exchange.GetEnabledPair();
     console.log(moneys)
 
 

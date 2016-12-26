@@ -14,7 +14,7 @@ const (
 	HUOBI_API_VERSION = "2"
 )
 
-type HUOBI struct {
+type HUOBIExchange struct {
 	Name                    string
 	Enabled                 bool
 	Verbose                 bool
@@ -42,7 +42,7 @@ type HuobiTickerResponse struct {
 	Ticker HuobiTicker
 }
 
-func (h *HUOBI) SetDefaults() {
+func (h *HUOBIExchange) SetDefaults() {
 	h.Name = "Huobi"
 	h.Enabled = false
 	h.Fee = 0
@@ -51,60 +51,45 @@ func (h *HUOBI) SetDefaults() {
 	h.RESTPollingDelay = 10
 }
 
-func (h *HUOBI) GetName() string {
+func (h *HUOBIExchange) GetName() string {
 	return h.Name
 }
 
-func (h *HUOBI) SetEnabled(enabled bool) {
+func (h *HUOBIExchange) SetEnabled(enabled bool) {
 	h.Enabled = enabled
 }
 
-func (h *HUOBI) IsEnabled() bool {
+func (h *HUOBIExchange) IsEnabled() bool {
 	return h.Enabled
 }
 
-func (h *HUOBI) Setup(exch Exchanges) {
-	if !exch.Enabled {
-		h.SetEnabled(false)
-	} else {
-		h.Enabled = true
-		h.AuthenticatedAPISupport = exch.AuthenticatedAPISupport
-		h.SetAPIKeys(exch.APIKey, exch.APISecret)
-		h.RESTPollingDelay = exch.RESTPollingDelay
-		h.Verbose = exch.Verbose
-		h.Websocket = exch.Websocket
-		h.BaseCurrencies = SplitStrings(exch.BaseCurrencies, ",")
-		h.AvailablePairs = SplitStrings(exch.AvailablePairs, ",")
-		h.EnabledPairs = SplitStrings(exch.EnabledPairs, ",")
-	}
+func (h *HUOBIExchange) Setup(exConfig ExchangeConfig) {
+	h.RESTPollingDelay = exConfig.RESTPollingDelay
+	h.BaseCurrencies = SplitStrings(exConfig.BaseCurrencies, ",")
+	h.AvailablePairs = SplitStrings(exConfig.AvailablePairs, ",")
 }
 
-func (k *HUOBI) GetEnabledCurrencies() []string {
-	return k.EnabledPairs
+func (k *HUOBIExchange) GetAvailablePairs() []string {
+	return k.AvailablePairs
 }
 
-func (h *HUOBI) Start() {
+func (h *HUOBIExchange) Start() {
 	go h.Run()
 }
 
-func (h *HUOBI) SetAPIKeys(apiKey, apiSecret string) {
+func (h *HUOBIExchange) SetAPIKeys(apiKey, apiSecret string) {
 	h.AccessKey = apiKey
 	h.SecretKey = apiSecret
 }
 
-func (h *HUOBI) GetFee() float64 {
+func (h *HUOBIExchange) GetFee() float64 {
 	return h.Fee
 }
 
-func (h *HUOBI) Run() {
+func (h *HUOBIExchange) Run() {
 	if h.Verbose {
-		log.Printf("%s Websocket: %s (url: %s).\n", h.GetName(), IsEnabled(h.Websocket), HUOBI_SOCKETIO_ADDRESS)
 		log.Printf("%s polling delay: %ds.\n", h.GetName(), h.RESTPollingDelay)
 		log.Printf("%s %d currencies enabled: %s.\n", h.GetName(), len(h.EnabledPairs), h.EnabledPairs)
-	}
-
-	if h.Websocket {
-		go h.WebsocketClient()
 	}
 
 	for h.Enabled {
@@ -116,15 +101,15 @@ func (h *HUOBI) Run() {
 				HuobiHighUSD, _ := ConvertCurrency(ticker.High, "CNY", "USD")
 				HuobiLowUSD, _ := ConvertCurrency(ticker.Low, "CNY", "USD")
 				log.Printf("Huobi %s: Last %f (%f) High %f (%f) Low %f (%f) Volume %f\n", currency, HuobiLastUSD, ticker.Last, HuobiHighUSD, ticker.High, HuobiLowUSD, ticker.Low, ticker.Vol)
-				AddExchangeInfo(h.GetName(), StringToUpper(currency[0:3]), StringToUpper(currency[3:]), ticker.Last, ticker.Vol)
-				AddExchangeInfo(h.GetName(), StringToUpper(currency[0:3]), "USD", HuobiLastUSD, ticker.Vol)
+				//AddExchangeInfo(h.GetName(), StringToUpper(currency[0:3]), StringToUpper(currency[3:]), ticker.Last, ticker.Vol)
+				//AddExchangeInfo(h.GetName(), StringToUpper(currency[0:3]), "USD", HuobiLastUSD, ticker.Vol)
 			}()
 		}
 		time.Sleep(time.Second * h.RESTPollingDelay)
 	}
 }
 
-func (h *HUOBI) GetTicker(symbol string) HuobiTicker {
+func (h *HUOBIExchange) GetTicker(symbol string) HuobiTicker {
 	resp := HuobiTickerResponse{}
 	path := fmt.Sprintf("http://api.huobi.com/staticmarket/ticker_%s_json.js", symbol)
 	err := SendHTTPGetRequest(path, true, &resp)
@@ -136,21 +121,21 @@ func (h *HUOBI) GetTicker(symbol string) HuobiTicker {
 	return resp.Ticker
 }
 
-func (h *HUOBI) GetTickerPrice(currency string) TickerPrice {
-	var tickerPrice TickerPrice
-	ticker := h.GetTicker(currency)
-	tickerPrice.Ask = ticker.Sell
-	tickerPrice.Bid = ticker.Buy
-	tickerPrice.CryptoCurrency = currency
-	tickerPrice.Low = ticker.Low
-	tickerPrice.Last = ticker.Last
-	tickerPrice.Volume = ticker.Vol
-	tickerPrice.High = ticker.High
+// func (h *HUOBI) GetTickerPrice(currency string) TickerPrice {
+// 	var tickerPrice TickerPrice
+// 	ticker := h.GetTicker(currency)
+// 	tickerPrice.Ask = ticker.Sell
+// 	tickerPrice.Bid = ticker.Buy
+// 	tickerPrice.CryptoCurrency = currency
+// 	tickerPrice.Low = ticker.Low
+// 	tickerPrice.Last = ticker.Last
+// 	tickerPrice.Volume = ticker.Vol
+// 	tickerPrice.High = ticker.High
 
-	return tickerPrice
-}
+// 	return tickerPrice
+// }
 
-func (h *HUOBI) GetOrderBook(symbol string) bool {
+func (h *HUOBIExchange) GetOrderBook(symbol string) bool {
 	path := fmt.Sprintf("http://api.huobi.com/staticmarket/depth_%s_json.js", symbol)
 	err := SendHTTPGetRequest(path, true, nil)
 	if err != nil {
@@ -160,7 +145,7 @@ func (h *HUOBI) GetOrderBook(symbol string) bool {
 	return true
 }
 
-func (h *HUOBI) GetAccountInfo() {
+func (h *HUOBIExchange) GetAccountInfo() {
 	err := h.SendAuthenticatedRequest("get_account_info", url.Values{})
 
 	if err != nil {
@@ -168,7 +153,7 @@ func (h *HUOBI) GetAccountInfo() {
 	}
 }
 
-func (h *HUOBI) GetOrders(coinType int) {
+func (h *HUOBIExchange) GetOrders(coinType int) {
 	values := url.Values{}
 	values.Set("coin_type", strconv.Itoa(coinType))
 	err := h.SendAuthenticatedRequest("get_orders", values)
@@ -178,7 +163,7 @@ func (h *HUOBI) GetOrders(coinType int) {
 	}
 }
 
-func (h *HUOBI) GetOrderInfo(orderID, coinType int) {
+func (h *HUOBIExchange) GetOrderInfo(orderID, coinType int) {
 	values := url.Values{}
 	values.Set("id", strconv.Itoa(orderID))
 	values.Set("coin_type", strconv.Itoa(coinType))
@@ -189,7 +174,7 @@ func (h *HUOBI) GetOrderInfo(orderID, coinType int) {
 	}
 }
 
-func (h *HUOBI) Trade(orderType string, coinType int, price, amount float64) {
+func (h *HUOBIExchange) Trade(orderType string, coinType int, price, amount float64) {
 	values := url.Values{}
 	if orderType != "buy" {
 		orderType = "sell"
@@ -204,7 +189,7 @@ func (h *HUOBI) Trade(orderType string, coinType int, price, amount float64) {
 	}
 }
 
-func (h *HUOBI) MarketTrade(orderType string, coinType int, price, amount float64) {
+func (h *HUOBIExchange) MarketTrade(orderType string, coinType int, price, amount float64) {
 	values := url.Values{}
 	if orderType != "buy_market" {
 		orderType = "sell_market"
@@ -219,7 +204,7 @@ func (h *HUOBI) MarketTrade(orderType string, coinType int, price, amount float6
 	}
 }
 
-func (h *HUOBI) CancelOrder(orderID, coinType int) {
+func (h *HUOBIExchange) CancelOrder(orderID, coinType int) {
 	values := url.Values{}
 	values.Set("coin_type", strconv.Itoa(coinType))
 	values.Set("id", strconv.Itoa(orderID))
@@ -230,7 +215,7 @@ func (h *HUOBI) CancelOrder(orderID, coinType int) {
 	}
 }
 
-func (h *HUOBI) ModifyOrder(orderType string, coinType, orderID int, price, amount float64) {
+func (h *HUOBIExchange) ModifyOrder(orderType string, coinType, orderID int, price, amount float64) {
 	values := url.Values{}
 	values.Set("coin_type", strconv.Itoa(coinType))
 	values.Set("id", strconv.Itoa(orderID))
@@ -243,7 +228,7 @@ func (h *HUOBI) ModifyOrder(orderType string, coinType, orderID int, price, amou
 	}
 }
 
-func (h *HUOBI) GetNewDealOrders(coinType int) {
+func (h *HUOBIExchange) GetNewDealOrders(coinType int) {
 	values := url.Values{}
 	values.Set("coin_type", strconv.Itoa(coinType))
 	err := h.SendAuthenticatedRequest("get_new_deal_orders", values)
@@ -253,7 +238,7 @@ func (h *HUOBI) GetNewDealOrders(coinType int) {
 	}
 }
 
-func (h *HUOBI) GetOrderIDByTradeID(coinType, orderID int) {
+func (h *HUOBIExchange) GetOrderIDByTradeID(coinType, orderID int) {
 	values := url.Values{}
 	values.Set("coin_type", strconv.Itoa(coinType))
 	values.Set("trade_id", strconv.Itoa(orderID))
@@ -264,7 +249,7 @@ func (h *HUOBI) GetOrderIDByTradeID(coinType, orderID int) {
 	}
 }
 
-func (h *HUOBI) SendAuthenticatedRequest(method string, v url.Values) error {
+func (h *HUOBIExchange) SendAuthenticatedRequest(method string, v url.Values) error {
 	v.Set("access_key", h.AccessKey)
 	v.Set("created", strconv.FormatInt(time.Now().Unix(), 10))
 	v.Set("method", method)
@@ -294,8 +279,7 @@ func (h *HUOBI) SendAuthenticatedRequest(method string, v url.Values) error {
 
 //TODO: retrieve HUOBI balance info
 //GetExchangeAccountInfo : Retrieves balances for all enabled currencies for the HUOBI exchange
-func (e *HUOBI) GetExchangeAccountInfo() (ExchangeAccountInfo, error) {
+func (e *HUOBIExchange) GetExchangeAccountInfo() (ExchangeAccountInfo, error) {
 	var response ExchangeAccountInfo
-	response.ExchangeName = e.GetName()
 	return response, nil
 }

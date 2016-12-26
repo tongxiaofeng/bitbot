@@ -4,15 +4,15 @@ function log(string){
 
 function main() {
 	log("Running second strategy")
-    var  before =  Date.now();
+    // var  before =  Date.now();
 
-    for(i = 0;i<100;i++){
-        console.log("+++++++  :" + i);
-    }
-    var after =  Date.now();
+    // for(i = 0;i<100;i++){
+    //     console.log("+++++++  :" + i);
+    // }
+    // var after =  Date.now();
 
-    var diff = after - before;
-    log("Time used:" + diff + " ms")
+    //var diff = after - before;
+    //log("Time used:" + diff + " ms")
 
     var version = Version();
 
@@ -26,7 +26,7 @@ function main() {
     // var diff = after - before;
     // log("Time slept:" + diff + " ms")
 
-    _.each([1, 2, 3,4,5,6,7], log);
+    //_.each([1, 2, 3,4,5,6,7], log);
     Log("this is a test Log in second strategy")
     //Log("Sin:", Sin([1.5,2.0]))
     log("finish main in second strategy")

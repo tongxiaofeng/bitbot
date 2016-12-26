@@ -2,9 +2,12 @@ package main
 
 import (
 	"log"
+	_ "net/http/pprof"
 	"os"
+	"os/signal"
 	"runtime"
 	"strconv"
+	"syscall"
 )
 
 var verbose bool
@@ -12,15 +15,15 @@ var verbose bool
 var version = "No Version Provided"
 var buildstamp = "No Buildstamp Provided"
 var githash = "No Githash Provided"
+var docker *Docker = &Docker{}
 
 func main() {
 	var shutdownChan chan bool
-	var docker Docker
 
-	log.Println("Version:" + version + "\n" + "Buildstamp:" + buildstamp + "\n" + "Git Hash:" + githash)
-	docker.handleInterrupt()
+	log.Println("Version:" + version + "   Buildstamp:" + buildstamp + "   Git Hash:" + githash)
+	handleInterrupt()
 
-	verbose = true
+	//verbose = true
 
 	log.Println("Loading config file config.json..")
 	err := docker.ReadConfig()
@@ -31,12 +34,6 @@ func main() {
 	verbose = docker.Verbose
 
 	log.Println("Config file loaded. Checking settings.. ")
-
-	err = docker.CheckConfigValues()
-	if err != nil {
-		log.Println("Fatal error checking config values. Error:", err)
-		return
-	}
 
 	AdjustGoMaxProcs()
 	docker.Start()
@@ -63,4 +60,16 @@ func AdjustGoMaxProcs() {
 	}
 	log.Println("Set GOMAXPROCS to:", maxProcs)
 	runtime.GOMAXPROCS(maxProcs)
+}
+
+func handleInterrupt() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		sig := <-c
+		log.Printf("Captured %v.", sig)
+		docker.SaveConfig()
+		docker.Stop()
+		os.Exit(1)
+	}()
 }
