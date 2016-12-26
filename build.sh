@@ -7,12 +7,10 @@
 # p=linux: GOOS=linux GOARCH=amd64
 # p=arm: GOOS=linux GOARCH=arm
 
-# argument "w" means builds web documents
 GOOS=""
 GOARCH=""
 Platform=""
 Version=`git describe --tags`
-BuildWeb=false
 BuildLDFlags="-X main.version=$Version -X main.buildstamp=`date -u '+%Y-%m-%d_%I:%M:%S%p'` -X main.githash=`git rev-parse HEAD`" 
 
 echo $BuildLDFlags
@@ -22,10 +20,7 @@ do
         case $arg in
              p)
                 Platform=$OPTARG
-                ;;
-             w)
-                BuildWeb=true
-                ;;                 
+                ;;            
              ?)  #当有不认识的选项的时候arg为?
              echo "Example usage: build.sh -p mac|win32|win64|linux|arc -v 0.1.0"
              ;;
@@ -103,18 +98,6 @@ mkdir $Version
 cp -aR $ROOT/bin/. $ROOT/dist/$Version
 
 echo "############ upload files to dist folder. ############"
-
-
-if [ $BuildWeb = true ];then
-echo "############ Building website documents. ############"
-
-    echo "############ Build websites. ############"
-    cd $ROOT/public
-    rm -rf *
-    cd $ROOT/hugo
-    hugo
-    rsync -avz -e "ssh -i ~/.ssh/kp-xak5varz" --progress ~/code/bitbot/public/ tong@207.226.143.243:/home/tong/bitbot.com.cn/
-fi
 
 cd $ROOT
 echo "############ Done. ############"
