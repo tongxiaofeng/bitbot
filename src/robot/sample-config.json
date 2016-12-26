@@ -1,0 +1,158 @@
+{
+  "ID": 0,
+  "ServerAddress": "",
+  "IP": "127.0.0.1",
+  "Port": 8080,
+  "OS": "Mac",
+  "OSVersion": "Latest",
+  "Status": 0,
+  "IsLocal": true,
+  "Verbose": true,
+  "Cryptocurrencies": "BTC,LTC,ETH,ETC",
+  "ExchangeConfigs": {
+    "BTCC": {
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY,LTCBTC",
+      "BaseCurrencies": "CNY"
+    },
+    "HUOBI": {
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY",
+      "BaseCurrencies": "CNY"
+    },
+    "OKCOINCNY": {
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCCNY,LTCCNY",
+      "BaseCurrencies": "CNY"
+    },
+    "OKCOINUSD": {
+      "RESTPollingDelay": 5000,
+      "AvailablePairs": "BTCUSD,LTCUSD",
+      "BaseCurrencies": "USD"
+    }
+  },
+  "ExchangeAccountConfigs": {
+    "0": {
+      "ExchangeName": "BTCC",
+      "Label": "BTCC-Tong",
+      "APIKey": "",
+      "APISecret": "",
+      "ClientID": "",
+      "EnabledPair": "BTCCNY",
+      "AuthenticatedAPISupport": true,
+      "DisplayCurrency": "CNY"
+    },
+    "1": {
+      "ExchangeName": "HUOBI",
+      "Label": "Huobi-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPair": "BTCCNY",
+      "AuthenticatedAPISupport": false,
+      "DisplayCurrency": "CNY"
+    },
+    "2": {
+      "ExchangeName": "OKCOINCNY",
+      "Label": "OKChina-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPair": "BTCCNY",
+      "AuthenticatedAPISupport": false,
+      "DisplayCurrency": "CNY"
+    },
+    "3": {
+      "ExchangeName": "OKCOINUSD",
+      "Label": "OKUSD-",
+      "APIKey": "Key",
+      "APISecret": "Secret",
+      "ClientID": "",
+      "EnabledPair": "BTCUSD",
+      "AuthenticatedAPISupport": false,
+      "DisplayCurrency": "CNY"
+    }
+  },
+  "StrategieConfigs": {
+    "0": {
+      "Name": "First JS Strategy",
+      "Description": "first strategy in javascript.",
+      "Lang": "JS",
+      "Code": "",
+      "StrategyVarabiles": {
+        "0": {
+          "Name": "num var",
+          "Description": "This is a number var",
+          "Hint": "",
+          "VarabileType": 0,
+          "DefaultValue": 0
+        },
+        "1": {
+          "Name": "bool var",
+          "Description": "This is a bool var",
+          "Hint": "",
+          "VarabileType": 1,
+          "DefaultValue": false
+        }
+      },
+      "LocalPath": "/Users/tongxiaofeng/code/bitbot/strategy/first.js",
+      "LocalCommandParams": ""
+    },
+    "1": {
+      "Name": "Second JS Strategy",
+      "Description": "second strategy in javascript.",
+      "Lang": "JS",
+      "Code": "",
+      "StrategyVarabiles": {
+        "0": {
+          "Name": "string var",
+          "Description": "This is a string var",
+          "Hint": "",
+          "VarabileType": 2,
+          "DefaultValue": "string for output."
+        }
+      },
+      "LocalPath": "/Users/tongxiaofeng/code/bitbot/strategy/second.js",
+      "LocalCommandParams": ""
+    }
+  },
+  "BotConfigs": {
+    "0": {
+      "Name": "First Bot",
+      "StrategyID": "0",
+      "DockerID": "0",
+      "KLineInterval": 0,
+      "ExchangeAccountAPIIDs": "2",
+      "Status": 1,
+      "StatusDescription": "This robot is stopped.",
+      "Enabled": true,
+      "Backtesting": false,
+      "PaperTrading": false,
+      "StrategyVarabileValues": {
+        "0": {
+          "Value": 10000
+        },
+        "1": {
+          "Value": true
+        }
+      }
+    },
+    "1": {
+      "Name": "Second Bot",
+      "StrategyID": "1",
+      "DockerID": "0",
+      "KLineInterval": 0,
+      "ExchangeAccountAPIIDs": "0,2",
+      "Status": 1,
+      "StatusDescription": "This robot is stopped.",
+      "Enabled": true,
+      "Backtesting": false,
+      "PaperTrading": false,
+      "StrategyVarabileValues": {
+        "0": {
+          "Value": false
+        }
+      }
+    }
+  }
+}
